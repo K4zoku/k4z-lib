@@ -70,16 +70,16 @@ public class EventManager {
             Set<RegisteredListener> eventSet = registeredListeners
                     .computeIfAbsent(eventClass, unused -> new HashSet<>());
             EventPriority priority = eh.priority();
-            EventExecutor executor = (listener1, event) -> {
+            EventExecutor executor = (l, e) -> {
                 try {
                     if (!method.isAccessible()) {
                         method.setAccessible(true);
                     }
-                    method.invoke(listener1, event);
-                } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                    throw new EventException(e, "Cannot access method " + method.getName() + " in " + method.getDeclaringClass().getCanonicalName());
-                } catch (Exception exception) {
-                    throw new EventException(exception);
+                    method.invoke(l, e);
+                } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                    throw new EventException(ex, "Cannot access method " + method.getName() + " in " + method.getDeclaringClass().getCanonicalName());
+                } catch (Exception ex) {
+                    throw new EventException(ex, "Unhandled exception in method " + method.getName() + " in " + method.getDeclaringClass().getCanonicalName());
                 }
             };
             boolean ignoreCancelled = eh.ignoreCancelled();
