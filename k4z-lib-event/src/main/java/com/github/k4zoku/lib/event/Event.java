@@ -6,6 +6,6 @@ public interface Event {
         return getClass().getSimpleName();
     }
 
-    HandlerList getHandlers();
+    EventHandlerList getHandlers();
 
 }

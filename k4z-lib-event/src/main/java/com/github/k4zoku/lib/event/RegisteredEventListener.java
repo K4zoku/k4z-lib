@@ -1,19 +1,19 @@
 package com.github.k4zoku.lib.event;
 
-public class RegisteredListener {
-    private final Listener listener;
+public class RegisteredEventListener {
+    private final EventListener listener;
     private final EventPriority priority;
     private final EventExecutor executor;
     private final boolean ignoreCancelled;
 
-    public RegisteredListener(Listener listener, EventPriority priority, EventExecutor executor, boolean ignoreCancelled) {
+    public RegisteredEventListener(EventListener listener, EventPriority priority, EventExecutor executor, boolean ignoreCancelled) {
         this.listener = listener;
         this.priority = priority;
         this.executor = executor;
         this.ignoreCancelled = ignoreCancelled;
     }
 
-    public Listener getListener() {
+    public EventListener getListener() {
         return this.listener;
     }
 

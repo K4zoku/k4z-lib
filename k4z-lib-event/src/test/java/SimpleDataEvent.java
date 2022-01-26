@@ -1,9 +1,9 @@
 import com.github.k4zoku.lib.event.CancellableEvent;
-import com.github.k4zoku.lib.event.HandlerList;
+import com.github.k4zoku.lib.event.EventHandlerList;
 
 public class SimpleDataEvent implements CancellableEvent {
 
-    private static final HandlerList HANDLER_LIST = new HandlerList();
+    private static final EventHandlerList HANDLER_LIST = new EventHandlerList();
 
     private final String data;
 
@@ -16,11 +16,11 @@ public class SimpleDataEvent implements CancellableEvent {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public EventHandlerList getHandlers() {
         return HANDLER_LIST;
     }
 
-    public static HandlerList getHandlerList() {
+    public static EventHandlerList getHandlerList() {
         return HANDLER_LIST;
     }
 

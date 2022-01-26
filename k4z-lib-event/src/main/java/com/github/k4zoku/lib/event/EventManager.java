@@ -11,10 +11,10 @@ public class EventManager {
     }
 
     public void callEvent(Event event) {
-        HandlerList handlers = event.getHandlers();
-        RegisteredListener[] listeners = handlers.getRegisteredListeners();
+        EventHandlerList handlers = event.getHandlers();
+        RegisteredEventListener[] listeners = handlers.getRegisteredListeners();
 
-        for (RegisteredListener listener : listeners) {
+        for (RegisteredEventListener listener : listeners) {
             try {
                 listener.call(event);
             } catch (Exception e) {
@@ -24,8 +24,8 @@ public class EventManager {
         }
     }
 
-    public void registerEvents(Listener listener) {
-        for (Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry : createRegisteredListeners(listener).entrySet()) {
+    public void registerEvents(EventListener listener) {
+        for (Map.Entry<Class<? extends Event>, Set<RegisteredEventListener>> entry : createRegisteredListeners(listener).entrySet()) {
             getEventListeners(getRegistrationClass(entry.getKey())).registerAll(entry.getValue());
         }
     }
@@ -48,8 +48,8 @@ public class EventManager {
         return null;
     }
 
-    private Map<Class<? extends Event>, Set<RegisteredListener>> createRegisteredListeners(Listener listener) {
-        Map<Class<? extends Event>, Set<RegisteredListener>> registeredListeners = new HashMap<>();
+    private Map<Class<? extends Event>, Set<RegisteredEventListener>> createRegisteredListeners(EventListener listener) {
+        Map<Class<? extends Event>, Set<RegisteredEventListener>> registeredListeners = new HashMap<>();
         Set<Method> methods;
         Class<?> listenerClass = listener.getClass();
         try {
@@ -67,7 +67,7 @@ public class EventManager {
                 continue;
             }
             EventHandler eh = method.getAnnotation(EventHandler.class);
-            Set<RegisteredListener> eventSet = registeredListeners
+            Set<RegisteredEventListener> eventSet = registeredListeners
                     .computeIfAbsent(eventClass, unused -> new HashSet<>());
             EventPriority priority = eh.priority();
             EventExecutor executor = (l, e) -> {
@@ -83,7 +83,7 @@ public class EventManager {
                 }
             };
             boolean ignoreCancelled = eh.ignoreCancelled();
-            eventSet.add(new RegisteredListener(listener, priority, executor, ignoreCancelled));
+            eventSet.add(new RegisteredEventListener(listener, priority, executor, ignoreCancelled));
         }
         return registeredListeners;
     }
@@ -103,19 +103,19 @@ public class EventManager {
         }
     }
 
-    public void registerEvent(Class<? extends Event> eventClass, Listener listener, EventPriority priority, EventExecutor executor) {
+    public void registerEvent(Class<? extends Event> eventClass, EventListener listener, EventPriority priority, EventExecutor executor) {
         registerEvent(eventClass, listener, priority, executor, false);
     }
 
-    public void registerEvent(Class<? extends Event> eventClass, Listener listener, EventPriority priority, EventExecutor executor, boolean ignoreCancelled) {
+    public void registerEvent(Class<? extends Event> eventClass, EventListener listener, EventPriority priority, EventExecutor executor, boolean ignoreCancelled) {
         getEventListeners(eventClass)
-                .register(new RegisteredListener(listener, priority, executor, ignoreCancelled));
+                .register(new RegisteredEventListener(listener, priority, executor, ignoreCancelled));
     }
 
-    private HandlerList getEventListeners(Class<? extends Event> eventClass) {
+    private EventHandlerList getEventListeners(Class<? extends Event> eventClass) {
         try {
             Method method = eventClass.getMethod("getHandlerList");
-            return (HandlerList) method.invoke(null);
+            return (EventHandlerList) method.invoke(null);
         } catch (Exception e) {
             throw new IllegalStateException("Unable to get event handler list for event " + eventClass.getName(), e);
         }
