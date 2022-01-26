@@ -10,6 +10,13 @@
 <p align="justify">
     This library is a collection of useful functions and classes for my personal projects. It is not intended for use in other projects, If you want to use it anyway, please use at your own risk. If you are using it in a commercial project, please contact me first.
 </p>
+<h2>📚 Modules</h2>
+<p align="justify">
+    This library contains the following modules:
+</p>
+<ul>
+    <li><code>k4z-lib-event</code> Using for event handling. Taken from bukkit, removed some unnecessary methods.</li>
+</ul>
 <br>
 <br>
 <br>
