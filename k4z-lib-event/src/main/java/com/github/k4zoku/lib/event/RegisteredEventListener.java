@@ -22,7 +22,8 @@ public class RegisteredEventListener {
     }
 
     public void call(final Event event) throws EventException {
-        if (event instanceof CancellableEvent && ((CancellableEvent) event).isCancelled()) {
+        if (isIgnoringCancelled() &&
+                event instanceof CancellableEvent && ((CancellableEvent) event).isCancelled()) {
             return;
         }
         this.executor.execute(this.listener, event);

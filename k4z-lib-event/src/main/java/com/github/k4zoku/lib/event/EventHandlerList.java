@@ -46,6 +46,11 @@ public class EventHandlerList {
         if (changed) handlers = null;
     }
 
+    public synchronized void unregisterAll() {
+        handlerSlots.clear();
+        handlers = null;
+    }
+
     public synchronized void bake() {
         if (handlers != null) return; // don't re-bake when still valid
         List<RegisteredEventListener> entries = new ArrayList<>();
