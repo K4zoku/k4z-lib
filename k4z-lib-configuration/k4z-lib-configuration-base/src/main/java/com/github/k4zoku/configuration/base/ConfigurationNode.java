@@ -14,6 +14,13 @@ import java.util.Set;
 public interface ConfigurationNode {
 
     /**
+     * Determine whether the node is root node
+     *
+     * @return true if the node is root node
+     */
+    boolean isRoot();
+
+    /**
      * Get root node, which is the root node of the whole configuration
      *
      * @return root node, itself if the node is root node
