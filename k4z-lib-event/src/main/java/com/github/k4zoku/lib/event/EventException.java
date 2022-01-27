@@ -1,7 +1,6 @@
 package com.github.k4zoku.lib.event;
 
 public class EventException extends Exception {
-    private static final long serialVersionUID = 3532808232324183999L;
     private final Throwable cause;
 
     /**
