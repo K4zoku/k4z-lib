@@ -8,11 +8,10 @@ import java.lang.annotation.*;
  * The method must have the following signature:
  * <br>
  * <code>void onEvent(Event event)</code>
- * <br>
+ * <ul>
  * <li><code>Event</code> is the event type.</li>
  * <li><code>event</code> is the event that was fired.</li>
- * <br>
- * <br>
+ * </ul>
  * <b>Example:</b>
  * <br>
  * <code>@EventHandler<br>public void onEvent(Event event) {<br> // do something<br>}</code>
