@@ -1,7 +1,8 @@
 package com.github.k4zoku.lib.event;
 
 /**
- * Same as {@link Event}, but with a boolean flag to cancel the event.
+ * Same as {@link Event}, but with a boolean flag to determine the
+ * event is cancelled.
  */
 public interface CancellableEvent extends Event {
 
