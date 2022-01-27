@@ -1,5 +1,9 @@
 package com.github.k4zoku.lib.event;
 
+/**
+ * Event interface, all events must implement this interface
+ * to be able to be handled by the EventManager.
+ */
 public interface Event {
 
     /**

@@ -22,7 +22,7 @@ public class RegisteredEventListener {
     }
 
     public void call(final Event event) throws EventException {
-        if (isIgnoringCancelled() &&
+        if (!isIgnoringCancelled() &&
                 event instanceof CancellableEvent && ((CancellableEvent) event).isCancelled()) {
             return;
         }
