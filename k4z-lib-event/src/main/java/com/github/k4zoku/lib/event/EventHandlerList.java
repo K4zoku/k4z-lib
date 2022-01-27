@@ -14,8 +14,12 @@ public class EventHandlerList {
         }
     }
 
+    private ArrayList<RegisteredEventListener> getSlot(EventPriority priority) {
+        return handlerSlots.computeIfAbsent(priority, k -> new ArrayList<>());
+    }
+
     public synchronized void register(RegisteredEventListener listener) {
-        if (handlerSlots.get(listener.getPriority()).contains(listener))
+        if (getSlot(listener.getPriority()).contains(listener))
             throw new IllegalStateException("This listener is already registered to priority " + listener.getPriority().toString());
         handlers = null;
         handlerSlots.get(listener.getPriority()).add(listener);
@@ -28,7 +32,7 @@ public class EventHandlerList {
     }
 
     public synchronized void unregister(RegisteredEventListener listener) {
-        if (handlerSlots.get(listener.getPriority()).remove(listener)) {
+        if (getSlot(listener.getPriority()).remove(listener)) {
             handlers = null;
         }
     }
@@ -54,9 +58,7 @@ public class EventHandlerList {
     public synchronized void bake() {
         if (handlers != null) return; // don't re-bake when still valid
         List<RegisteredEventListener> entries = new ArrayList<>();
-        for (Map.Entry<EventPriority, ArrayList<RegisteredEventListener>> entry : handlerSlots.entrySet()) {
-            entries.addAll(entry.getValue());
-        }
+        handlerSlots.values().forEach(entries::addAll);
         handlers = entries.toArray(new RegisteredEventListener[0]);
     }
 

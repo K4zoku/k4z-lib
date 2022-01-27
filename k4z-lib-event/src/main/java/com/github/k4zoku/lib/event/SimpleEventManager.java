@@ -49,6 +49,13 @@ public class SimpleEventManager implements EventManager {
     }
 
     @Override
+    public void unregisterAll(Class<? extends Event> eventType) {
+        Set<EventHandlerList> handlers = handlerListMap.computeIfAbsent(eventType, k -> new HashSet<>());
+        handlers.forEach(EventHandlerList::unregisterAll);
+        handlers.clear();
+    }
+
+    @Override
     public void unregisterAll() {
         handlerListMap.values()
                 .forEach(handlers -> handlers.forEach(EventHandlerList::unregisterAll));
