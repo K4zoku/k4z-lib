@@ -1,5 +1,10 @@
 package com.github.k4zoku.lib.event;
 
+/**
+ * Used to wrap all info of a registered event listener in a
+ * single object to be able to put it in a list. And easier to
+ * calling the handler when the event is fired.
+ */
 public class RegisteredEventListener {
     private final EventListener listener;
     private final EventPriority priority;
@@ -22,7 +27,7 @@ public class RegisteredEventListener {
     }
 
     public void call(final Event event) throws EventException {
-        if (!isIgnoringCancelled() &&
+        if (isIgnoringCancelled() &&
                 event instanceof CancellableEvent && ((CancellableEvent) event).isCancelled()) {
             return;
         }

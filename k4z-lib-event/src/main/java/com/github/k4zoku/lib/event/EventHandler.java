@@ -28,9 +28,9 @@ public @interface EventHandler {
     EventPriority priority() default EventPriority.NORMAL;
 
     /**
-     * Call the event handler when the event is fired even if the event is cancelled.
+     * Indicates whether the event handler should be ignored if the event is cancelled.
      *
-     * @return true if the event handler should be called even if the event is cancelled.
+     * @return true when the event handler should be ignored if the event is cancelled.
      */
-    boolean ignoreCancelled() default false;
+    boolean ignoreCancelled() default true;
 }
