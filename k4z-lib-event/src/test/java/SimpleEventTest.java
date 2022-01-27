@@ -55,7 +55,7 @@ class SimpleEventTest {
     void testUnregisterWithoutListener() {
         EventManager eventManager = new SimpleEventManager();
         AtomicReference<String> received = new AtomicReference<>();
-        EventListener dummy = eventManager.register(SimpleDataEvent.class, ((event) -> received.set(event.getData())));
+        EventListener dummy = eventManager.register(SimpleDataEvent.class, event -> received.set(event.getData()));
         eventManager.unregister(dummy);
         eventManager.fire(new SimpleDataEvent("Hello World!"));
         assertNull(received.get());
@@ -65,8 +65,18 @@ class SimpleEventTest {
     void testUnregisterAllType() {
         EventManager eventManager = new SimpleEventManager();
         AtomicReference<String> received = new AtomicReference<>();
-        eventManager.register(SimpleDataEvent.class, ((event) -> received.set(event.getData())));
+        eventManager.register(SimpleDataEvent.class, event -> received.set(event.getData()));
         eventManager.unregisterAll(SimpleDataEvent.class);
+        eventManager.fire(new SimpleDataEvent("Hello World!"));
+        assertNull(received.get());
+    }
+
+    @Test
+    void testUnregisterAll() {
+        EventManager eventManager = new SimpleEventManager();
+        AtomicReference<String> received = new AtomicReference<>();
+        eventManager.register(SimpleDataEvent.class, (event -> received.set(event.getData())));
+        eventManager.unregisterAll();
         eventManager.fire(new SimpleDataEvent("Hello World!"));
         assertNull(received.get());
     }
