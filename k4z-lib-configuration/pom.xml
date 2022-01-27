@@ -8,9 +8,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
 
-    <name>K4zoku's event library</name>
-    <description>Using for event handling, taken from bukkit</description>
-    <artifactId>k4z-lib-event</artifactId>
+    <name>K4zoku's configuration library</name>
+    <description>Configuration parse and store to a generic memory structure</description>
+    <modules>
+        <module>k4z-lib-configuration-base</module>
+    </modules>
+    <artifactId>k4z-lib-configuration</artifactId>
     <version>1.0-SNAPSHOT</version>
 </project>

@@ -23,6 +23,10 @@
 </p>
 <ul>
     <li><code>k4z-lib-event</code> Using for event handling. Taken from bukkit, removed some unnecessary methods.</li>
+    <li><code>k4z-lib-configuration</code> <i>*insert good description here</i></li>
+    <ul>
+        <li><code>k4z-lib-configuration-base</code> <i>*insert good description here</i></li>
+    </ul>
 </ul>
 <br>
 <br>

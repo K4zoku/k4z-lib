@@ -3,14 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>k4z-lib</artifactId>
+        <artifactId>k4z-lib-configuration</artifactId>
         <groupId>com.github.k4zoku</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <name>K4zoku's event library</name>
-    <description>Using for event handling, taken from bukkit</description>
-    <artifactId>k4z-lib-event</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>k4z-lib-configuration-base</artifactId>
 </project>

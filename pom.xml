@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>k4z-lib-event</module>
+        <module>k4z-lib-configuration</module>
     </modules>
 
     <name>K4zoku's library</name>
