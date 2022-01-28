@@ -76,6 +76,11 @@ public class MemoryConfiguration extends MemoryConfigurationNode implements Conf
         return node == null ? def : node.value();
     }
 
+    @Override
+    public ConfigurationNode getNode(String path) {
+        return getNode(path, false);
+    }
+
     protected ConfigurationNode getNode(String path, boolean create) {
         ConfigurationNode node = this;
         final char separator = options().pathSeparator();
