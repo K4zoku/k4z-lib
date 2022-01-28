@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class MemoryConfigurationNode implements ConfigurationNode {
 
@@ -87,6 +88,30 @@ public abstract class MemoryConfigurationNode implements ConfigurationNode {
             }
         } else {
             result.addAll(this.children.values());
+        }
+        return result;
+    }
+
+    @Override
+    public Set<Object> getValues(boolean recursive) {
+        Set<Object> result = new HashSet<>();
+        if (recursive) {
+            Queue<ConfigurationNode> queue = new LinkedList<>();
+            queue.add(this);
+            while (!queue.isEmpty()) {
+                ConfigurationNode node = queue.poll();
+                if (node.hasChildren()) {
+                    Set<ConfigurationNode> children = node.getChildren(false);
+                    for (ConfigurationNode child : children) {
+                        result.add(child.value());
+                        if (child.hasChildren()) {
+                            queue.add(child);
+                        }
+                    }
+                }
+            }
+        } else {
+            result.addAll(this.children.values().stream().map(ConfigurationNode::value).collect(Collectors.toSet()));
         }
         return result;
     }

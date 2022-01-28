@@ -116,6 +116,23 @@ public interface ConfigurationNode {
     Set<ConfigurationNode> getChildren(boolean recursive);
 
     /**
+     * Get all children keys
+     *
+     * @param recursive whether to get all child keys recursively
+     * @return all children key
+     */
+    @NotNull
+    Set<String> getKeys(boolean recursive);
+
+    /**
+     * Get all children values
+     *
+     * @param recursive whether to get all child values recursively
+     * @return all children value
+     */
+    Set<Object> getValues(boolean recursive);
+
+    /**
      * Get the key identifier of current node
      *
      * @return the key

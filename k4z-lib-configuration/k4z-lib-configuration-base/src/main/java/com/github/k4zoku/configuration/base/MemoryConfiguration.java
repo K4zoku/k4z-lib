@@ -40,12 +40,12 @@ public class MemoryConfiguration extends MemoryConfigurationNode implements Conf
     public @NotNull Map<String, ConfigurationNode> getChildrenMap(boolean recursive) {
         Map<String, ConfigurationNode> result = new LinkedHashMap<>();
         if (recursive) {
-            Map<ConfigurationNode, String> paths = new HashMap<>();
+            Map<ConfigurationNode, String> cachedPaths = new HashMap<>();
             Queue<ConfigurationNode> queue = new LinkedList<>(this.children.values());
             final char separator = options().pathSeparator();
             while (!queue.isEmpty()) {
                 ConfigurationNode node = queue.poll();
-                String path = paths.computeIfAbsent(
+                String path = cachedPaths.computeIfAbsent(
                     node.getParent(),
                     parent -> createPath(parent, separator, this)
                 );
@@ -61,6 +61,35 @@ public class MemoryConfiguration extends MemoryConfigurationNode implements Conf
             }
         } else {
             result.putAll(this.children);
+        }
+        return result;
+    }
+
+    @Override
+    public @NotNull Set<String> getKeys(boolean recursive) {
+        Set<String> result = new HashSet<>(this.children.keySet());
+        if (recursive) {
+            Map<ConfigurationNode, String> cachedPaths = new HashMap<>();
+            Queue<ConfigurationNode> queue = new LinkedList<>(this.children.values());
+            final char separator = options().pathSeparator();
+            while (!queue.isEmpty()) {
+                ConfigurationNode node = queue.poll();
+                String path = cachedPaths.computeIfAbsent(
+                    node.getParent(),
+                    parent -> createPath(parent, separator, this)
+                );
+                if (path.length() > 0) {
+                    path += separator;
+                }
+                path += node.key();
+                result.add(path);
+                if (node.hasChildren()) {
+                    queue.addAll(node.getChildren(false));
+                }
+
+            }
+        } else {
+            result.addAll(this.children.keySet());
         }
         return result;
     }
