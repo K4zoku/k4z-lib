@@ -58,7 +58,7 @@ public class MemoryConfiguration extends MemoryConfigurationNode implements Conf
 
             }
         } else {
-            return this.children;
+            result.putAll(this.children);
         }
         return result;
     }

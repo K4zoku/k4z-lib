@@ -21,5 +21,7 @@ class MemoryConfigurationTest {
         assertNull(configuration.get("key.child.child2.child3.child4"));
         assertEquals(2, configuration.getChildren(false).size());
         assertEquals(5, configuration.getChildren(true).size());
+        assertEquals(2, configuration.getChildrenMap(false).size());
+        assertEquals(5, configuration.getChildrenMap(true).size());
     }
 }
