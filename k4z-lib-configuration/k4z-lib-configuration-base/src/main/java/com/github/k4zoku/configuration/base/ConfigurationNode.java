@@ -1,5 +1,6 @@
 package com.github.k4zoku.configuration.base;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,14 +46,53 @@ public interface ConfigurationNode {
     /**
      * Determine whether the node has child node
      *
+     * @param key child node key
      * @return true if the node has child node
      */
-    boolean hasChild();
+    boolean hasChild(String key);
 
     /**
-     * Get all child node
+     * Get child node with specified key
      * <br>
-     * If recursive is true, it will return all child node includes their child
+     * default to {@link #getChild(String, boolean) getChild(key, false)}
+     *
+     * @param key child node key
+     * @return child node, null if no child node with specified key exists
+     */
+    default ConfigurationNode getChild(String key) {
+        return getChild(key, false);
+    }
+
+    /**
+     * Get child node with specified key
+     *
+     * @param key child node key
+     * @param create whether to create child node if no child node with specified key exists
+     * @return child node, nullable if create is false
+     */
+    @Contract("_, true -> !null")
+    ConfigurationNode getChild(String key, boolean create);
+
+    /**
+     * Create a new child node with specified key
+     *
+     * @param key child node key
+     * @return new child node
+     */
+    ConfigurationNode createChild(String key);
+
+    /**
+     * Determine whether the node has children
+     *
+     * @return true if the node has children
+     */
+    boolean hasChildren();
+
+    /**
+     * Get all children of current node as a map with key as key identifier and
+     * value as child node
+     * <br>
+     * If recursive is true, it will return all children includes their child
      * <br>
      * <b>Note:</b> If the node has no child section, return empty map
      *
@@ -60,16 +100,20 @@ public interface ConfigurationNode {
      * @return all child sections in a map with section name as key
      */
     @NotNull
-    Map<String, ConfigurationNode> getChild(boolean recursive);
+    Map<String, ConfigurationNode> getChildrenMap(boolean recursive);
 
     /**
-     * Get all child keys of current node
+     * Get all children of current node as a set
+     * <br>
+     * If recursive is true, it will return all children includes their child
+     * <br>
+     * <b>Note:</b> If the node has no child section, return empty set
      *
      * @param recursive whether to get all child keys recursively
-     * @return all child keys in a set
+     * @return all children in a set
      */
     @NotNull
-    Set<String> getKeys(boolean recursive);
+    Set<ConfigurationNode> getChildren(boolean recursive);
 
     /**
      * Get the key identifier of current node
