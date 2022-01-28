@@ -7,6 +7,8 @@ import java.util.*;
 
 public class MemoryConfiguration extends MemoryConfigurationNode implements Configuration {
 
+    protected ConfigurationOptions options;
+
     protected MemoryConfiguration(ConfigurationNode root, ConfigurationNode parent, String key) {
         super(root, parent, key);
     }
@@ -96,13 +98,11 @@ public class MemoryConfiguration extends MemoryConfigurationNode implements Conf
     }
 
     @Override
-    public ConfigurationOptions options() {
-        return new ConfigurationOptions() {
-            @Override
-            public char pathSeparator() {
-                return ConfigurationOptions.super.pathSeparator();
-            }
-        };
+    public MemoryConfigurationOptions options() {
+        if (options == null) {
+            options = new MemoryConfigurationOptions(this);
+        }
+        return (MemoryConfigurationOptions) this.options;
     }
 
 }
