@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -130,7 +131,7 @@ public interface ConfigurationNode {
      * @param recursive whether to get all child values recursively
      * @return all children value
      */
-    Set<Object> getValues(boolean recursive);
+    List<Object> getValues(boolean recursive);
 
     /**
      * Get the key identifier of current node
